@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Page</title>
+    <style>
+        body{
+            background-color: darkslategrey;
+        }
+        .fullpage{
+            text-align: center;
+
+        }
+    </style>
+</head>
+
+<div class="fullpage">
+    <body>
+    <h1>Edit Page</h1>
+
+    <form action="/update/{{.Id}}" method="POST">
+
+        <div>
+            <label>
+                TITLE <textarea name="title">{{.Title}}</textarea>
+            </label>
+        </div>
+        <br>
+        <div>
+            <label>
+                CONTENT <textarea  rows="10" cols="50" name="content" >{{.Content}}</textarea>
+            </label>
+        </div>
+        <br>
+        <div>
+            <button type="submit" >POST</button>
+        </div>
+    </form>
+
+
+
+    </body>
+</div>
+</html>

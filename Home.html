@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Blog</title>
+    <style>
+        body{
+            background-color: darkslategrey;
+
+        }
+        .fullpage{
+            text-align: center;
+        }
+
+        .blogpost{
+            border: 1px double black;
+            border-radius: 20px;
+        }
+        .title{
+            text-transform: uppercase;
+        }
+    </style>
+
+</head>
+
+<div class="fullpage">
+    <body>
+    <h1 style="font-family: cursive">VLOG BY EPIPHANY</h1>
+    <div>
+        <form action="/post" method="POST">
+
+            <div>
+                <label>TITLE
+                    <input type="text" name="title" placeholder="blog title">
+                </label>
+            </div>
+            <br>
+            <div>
+                <label>AUTHOR
+                    <input type="text" name="author" placeholder="author">
+                </label>
+            </div>
+            <br>
+            <div>
+                <label>
+                    CONTENT <textarea  rows="10" cols="50" name="content" placeholder="Write your blogpost" required></textarea>
+                </label>
+            </div>
+            <br>
+            <div>
+                <input type="submit" value="Blog It">
+            </div>
+        </form>
+    </div>
+
+
+    {{range $i,$v:= .}}
+
+    <div class="blogpost">
+        <h6 style="display: none">{{.Id}}</h6>
+        <h3 class="title">{{.Title}}</h3>
+        <article>{{.Content}}</article>
+        <em>By {{.Author}}   {{.Date}}</em>
+
+
+        <div>
+            <form action="/edit/{{ .Id }}" method="get">
+                <button type="submit" name="{{.Id}}"> Edit</button>
+            </form>
+
+        </div>
+        <div>
+
+            <form action="/delete/{{ .Id }}" method="get">
+                <button type="submit" name="{{.Id}}"> Delete</button>
+            </form>
+        </div>
+
+
+        {{end}}
+
+    </div>
+
+
+    </body>
+</div>
+</html>
