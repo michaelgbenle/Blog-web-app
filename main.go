@@ -149,19 +149,6 @@ func Update(w http.ResponseWriter, req *http.Request) {
 		fmt.Println(err)
 	}
 
-	//for i, v := range Blogposts {
-	//
-	//	if id == v.Id {
-	//		Blogposts[i].Content = InputContent
-	//		Blogposts[i].Title = InputTitle
-	//		Blogposts[i].Date = date
-	//		break
-	//	}
-	//
-	//}
-	//temp := template.Must(template.ParseFiles("Home.html"))
-	////
-	//err = temp.Execute(w, res)
 	Checkerr(err)
 	http.Redirect(w, req, "/", 301)
 
