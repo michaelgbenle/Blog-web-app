@@ -19,6 +19,10 @@
         .title{
             text-transform: uppercase;
         }
+        /*.subforms{*/
+
+        /*   display: contents;*/
+        /*}*/
     </style>
 
 </head>
@@ -48,7 +52,7 @@
             </div>
             <br>
             <div>
-                <input type="submit" value="Blog It">
+                <input type="submit" value="Vlog It">
             </div>
         </form>
     </div>
@@ -63,16 +67,15 @@
         <em>By {{.Author}}   {{.Date}}</em>
 
 
-        <div>
-            <form action="/edit/{{ .Id }}" method="get">
+        <div class="subforms" >
+            <form action="/edit/{{ .Id }}" method="get" >
                 <button type="submit" name="{{.Id}}"> Edit</button>
             </form>
 
-        </div>
-        <div>
 
-            <form action="/delete/{{ .Id }}" method="get">
-                <button type="submit" name="{{.Id}}"> Delete</button>
+
+            <form action="/delete/{{ .Id }}" method="get" >
+                <button type="submit" name="/{{.Id}}"> Delete</button>
             </form>
         </div>
 

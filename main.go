@@ -31,8 +31,8 @@ func Checkerr(err error) {
 }
 
 func main() {
-	//var err error
-	db, err := sql.Open("mysql", "root:abeokuta101@tcp(127.0.0.1:3306)/deji")
+	var err error
+	db, err = sql.Open("mysql", "root:abeokuta101@tcp(127.0.0.1:3306)/deji")
 	Checkerr(err)
 	defer db.Close()
 	fmt.Println("Successfully connected to mysql Database")
@@ -51,8 +51,7 @@ func main() {
 }
 
 func Home(w http.ResponseWriter, req *http.Request) {
-	statement := "SELECT * FROM deji.Blogposts"
-	rows, err := db.Query(statement)
+	rows, err := db.Query("SELECT * FROM deji.Blogposts")
 	Checkerr(err)
 	defer rows.Close()
 
@@ -75,16 +74,8 @@ func PostBlog(w http.ResponseWriter, req *http.Request) {
 	InputTitle := req.FormValue("title")
 	InputContent := req.FormValue("content")
 
-	now := time.Now()
-	date := now.Format("Mon Jan 02 15:04:05")
+	date := time.Now().Format("Mon Jan 02 15:04:05")
 
-	//data := Blog{
-	//	uuid.NewString(),
-	//	InputAuthor,
-	//	InputTitle,
-	//	InputContent,
-	//	date,
-	//}
 	ins, err := db.Prepare("INSERT INTO `deji`.`Blogposts` (`Id`,`Author`,`Title`,`Content`,`Date`) VALUES (?,?,?,?,?);")
 	Checkerr(err)
 	defer ins.Close()
@@ -95,12 +86,6 @@ func PostBlog(w http.ResponseWriter, req *http.Request) {
 		fmt.Println("error inserting row: ", err)
 	}
 
-	//Blogposts = append(Blogposts, data)
-
-	//temp := template.Must(template.ParseFiles("Home.html"))
-	//
-	//err = temp.Execute(w, data)
-	//Checkerr(err)
 	http.Redirect(w, req, "/", 301)
 }
 
@@ -113,28 +98,17 @@ func EditPage(w http.ResponseWriter, req *http.Request) {
 	data := Blog{}
 	for row.Next() {
 		var Id, Author, Title, Content, Date string
-		err := row.Scan(&Id, &Author, &Title, &Content, &Date)
+		err := row.Scan(&Id, &Title, &Author, &Content, &Date)
 		Checkerr(err)
 		data.Id = Id
 		data.Author = Author
-		data.Date = Date
 		data.Title = Title
 		data.Content = Content
+		data.Date = Date
+
 	}
 	temp := template.Must(template.ParseFiles("edit.html"))
 	err = temp.Execute(w, data)
-
-	//for i := range Blogposts {
-	//
-	//	if id == Blogposts[i].Id {
-	//		data = Blogposts[i]
-	//
-	//		temp := template.Must(template.ParseFiles("edit.html"))
-	//		err = temp.Execute(w, data)
-	//		Checkerr(err)
-	//
-	//	}
-	//}
 
 }
 
@@ -149,14 +123,6 @@ func DeletePage(w http.ResponseWriter, req *http.Request) {
 	rowsAff, _ := res.RowsAffected()
 	fmt.Println("rowsAff:", rowsAff)
 	Checkerr(err)
-	//for i, item := range Blogposts {
-	//
-	//	if id == item.Id {
-	//
-	//		Blogposts = append(Blogposts[:i], Blogposts[i+1:]...)
-	//	}
-	//
-	//}
 
 	http.Redirect(w, req, "/", 302)
 
